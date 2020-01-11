@@ -1,6 +1,6 @@
-package dataStructure;
+package code.dataStructure;
 
-import utils.Point3D;
+import code.utils.Point3D;
 /**
  * This interface represents the set of operations applicable on a 
  * node (vertex) in a (directional) weighted graph.
@@ -56,4 +56,5 @@ public interface node_data {
 	 * @param t - the new value of the tag
 	 */
 	public void setTag(int t);
+
 }

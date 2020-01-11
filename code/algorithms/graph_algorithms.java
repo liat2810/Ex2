@@ -1,4 +1,4 @@
-package algorithms;
+package code.algorithms;
 /**
  * This interface represents the "regular" Graph Theory algorithms including:
  * 0. clone();
@@ -11,11 +11,10 @@ package algorithms;
  * @author boaz.benmoshe
  *
  */
-
 import java.util.List;
 
-import dataStructure.graph;
-import dataStructure.node_data;
+import code.dataStructure.graph;
+import code.dataStructure.node_data;
 
 public interface graph_algorithms {
 	/**
