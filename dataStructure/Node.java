@@ -1,10 +1,10 @@
-package code.dataStructure;
+package dataStructure;
 
-import code.utils.Point3D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import utils.Point3D;
+
+import java.util.*;
 
 public class Node implements node_data {
 
@@ -22,9 +22,10 @@ public class Node implements node_data {
         this.key = key;
         this.location = location;
         this.weight = weight;
-        this.neighbors = new ArrayList<node_data>();
+        this.neighbors = new ArrayList<>();
         this.neighborsCount = 0;
-        this.neighborsKeyToIndex = new HashMap<Integer, Integer>();
+        this.neighborsKeyToIndex = new HashMap<>();
+        this.neighborsToEdges = new HashMap<>();
     }
 
     @Override
@@ -74,6 +75,10 @@ public class Node implements node_data {
 
     public ArrayList<node_data> getNeighbors(){
         return this.neighbors;
+    }
+
+    public Collection<edge_data> getAllEdges(){
+        return this.neighborsToEdges.values();
     }
 
     public Map<node_data, edge_data> getNeighborsToEdges(){
@@ -130,6 +135,23 @@ public class Node implements node_data {
 
 
 
+    public JSONObject toJsonObject(){
 
+        JSONObject obj = new JSONObject();
+
+        obj.put("key", this.key);
+        obj.put("weight", this.weight);
+
+        JSONObject p = new JSONObject();
+
+        p.put("x", this.location.x());
+        p.put("y", this.location.y());
+        p.put("z", this.location.z());
+
+        obj.put("Point3D", p);
+
+        return obj;
+
+    }
 
 }

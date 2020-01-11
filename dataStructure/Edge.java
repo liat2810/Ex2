@@ -1,4 +1,6 @@
-package code.dataStructure;
+package dataStructure;
+
+import org.json.simple.JSONObject;
 
 public class Edge implements edge_data {
 
@@ -49,4 +51,17 @@ public class Edge implements edge_data {
     public void setTag(int t) {
         this.tag = t;
     }
+
+
+    public JSONObject toJsonObject(){
+
+        JSONObject obj = new JSONObject();
+
+        obj.put("src", this.src.getKey());
+        obj.put("dest", this.dest.getKey());
+        obj.put("weight", this.weight);
+
+        return obj;
+    }
+
 }

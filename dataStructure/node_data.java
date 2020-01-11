@@ -1,6 +1,6 @@
-package code.dataStructure;
+package dataStructure;
 
-import code.utils.Point3D;
+import utils.Point3D;
 /**
  * This interface represents the set of operations applicable on a 
  * node (vertex) in a (directional) weighted graph.

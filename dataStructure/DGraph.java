@@ -1,4 +1,4 @@
-package code.dataStructure;
+package dataStructure;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +15,7 @@ public class DGraph implements graph{
 	public DGraph(){
 		this.V = new ArrayList<node_data>();
 		this.E = new ArrayList<edge_data>();
+		this.VKeyToIndex = new HashMap<>();
 		this.size = 0;
 	}
 
@@ -22,7 +23,7 @@ public class DGraph implements graph{
 	@Override
 	public node_data getNode(int key) {
 		Integer nodeIndex = this.getNodeIndexByKey(key);
-		if(nodeIndex > -1 && (nodeIndex > 0 && nodeIndex <this.size)){
+		if(nodeIndex > -1 && (nodeIndex >= 0 && nodeIndex <this.size)){
 			return this.V.get(nodeIndex);
 		}
 		return null;
@@ -58,8 +59,10 @@ public class DGraph implements graph{
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		return this.E;
+		Node src = (Node) this.getNode(node_id);
+		return src.getAllEdges();
 	}
+
 
 	@Override
 	public node_data removeNode(int key) {
@@ -100,10 +103,16 @@ public class DGraph implements graph{
 		return 0;
 	}
 
+
+	public Collection<edge_data> getAllEdges(){
+		return this.E;
+	}
+
+
 	private int getNodeIndexByKey(int key){
 		Integer nodeIndex = this.VKeyToIndex.get(key);
 
-		if(nodeIndex != null && (nodeIndex > 0 && nodeIndex < this.size)){
+		if(nodeIndex != null && (nodeIndex >= 0 && nodeIndex < this.size)){
 			return nodeIndex;
 		}
 

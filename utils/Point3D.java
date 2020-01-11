@@ -3,7 +3,7 @@
  * for 2D including Point-Line test.
  */
 
-package code.utils;
+package utils;
 
 import java.io.Serializable;
 
@@ -40,7 +40,9 @@ public class Point3D implements Serializable
     {
        this(p.x(), p.y(), p.z());
     }
+
     public Point3D(double x,double y)
+
     {this(x,y,0);}
     public Point3D(String s) {
         try {
