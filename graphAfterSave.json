@@ -1,0 +1,1 @@
+{"Edges":[{"src":1,"weight":1.0,"dest":2},{"src":2,"weight":2.0,"dest":1}],"Nodes":[{"Point3D":{"x":1.0,"y":1.0,"z":1.0},"weight":1.0,"key":1},{"Point3D":{"x":2.0,"y":2.0,"z":2.0},"weight":2.0,"key":2}]}

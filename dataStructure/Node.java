@@ -134,8 +134,50 @@ public class Node implements node_data {
     }
 
 
+//    public List<node_data> getShortestPathList(int key){
+//
+//        List<node_data> list;
+//        Node neighbor;
+//        double directWeight = Double.MAX_VALUE;
+//        double bypassWeight = Double.MAX_VALUE;
+//        double tempWeight = Double.MAX_VALUE;
+//
+//        edge_data edge = this.getEdgeByNeighborKey(key);
+//
+//        //calculate direct weight
+//        if(edge != null) {
+//            neighbor = (Node) this.neighbors.get(key);
+//            directWeight = edge.getWeight() + neighbor.getWeight();
+//        }
+//
+//        //else, we should ask our neighbors if there is a valid path between them and the other node
+//
+//        for(int i = 0; i < this.neighbors.size(); i++){
+//            neighbor = (Node) this.neighbors.get(i);
+//            // if there is a valid part between one of the neighbors and the other node then there is
+//            // a valid part between this node and the other part
+//            list = neighbor.getShortestPathList(key);
+//            tempWeight =
+//            if(list.size() >= 1){
+//                list.add(0 , neighbor);
+//                return list;
+//            }
+//        }
+//
+//        // there is no valid path
+//        return new ArrayList<>();
+//    }
 
-    public JSONObject toJsonObject(){
+
+    public double shortestPath(int key) {
+
+        return Double.MAX_VALUE;
+    }
+
+
+
+
+        public JSONObject toJsonObject(){
 
         JSONObject obj = new JSONObject();
 
