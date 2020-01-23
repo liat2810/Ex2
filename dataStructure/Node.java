@@ -28,6 +28,10 @@ public class Node implements node_data {
         this.neighborsToEdges = new HashMap<>();
     }
 
+    public Node(Node other){
+        this(other.key, new Point3D(other.location), other.weight);
+    }
+
     @Override
     public int getKey() {
         return this.key;
@@ -134,44 +138,51 @@ public class Node implements node_data {
     }
 
 
-//    public List<node_data> getShortestPathList(int key){
-//
-//        List<node_data> list;
-//        Node neighbor;
-//        double directWeight = Double.MAX_VALUE;
-//        double bypassWeight = Double.MAX_VALUE;
-//        double tempWeight = Double.MAX_VALUE;
-//
-//        edge_data edge = this.getEdgeByNeighborKey(key);
-//
-//        //calculate direct weight
-//        if(edge != null) {
-//            neighbor = (Node) this.neighbors.get(key);
-//            directWeight = edge.getWeight() + neighbor.getWeight();
-//        }
-//
-//        //else, we should ask our neighbors if there is a valid path between them and the other node
-//
-//        for(int i = 0; i < this.neighbors.size(); i++){
-//            neighbor = (Node) this.neighbors.get(i);
-//            // if there is a valid part between one of the neighbors and the other node then there is
-//            // a valid part between this node and the other part
-//            list = neighbor.getShortestPathList(key);
-//            tempWeight =
-//            if(list.size() >= 1){
-//                list.add(0 , neighbor);
-//                return list;
-//            }
-//        }
-//
-//        // there is no valid path
-//        return new ArrayList<>();
-//    }
+    public List<node_data> getShortestPathList(int key){
+
+        List<node_data> minList = new ArrayList<>();
+
+        if(key == this.key){
+            minList.add(this);
+            return minList;
+        }
+
+        List<node_data> tempList;
+
+        double minWeight = Double.MAX_VALUE;
+        double tempWeight;
+
+        Node neighbor;
+
+        //else, we should ask our neighbors if there is a valid path between them and the other node
+        for(int i = 0; i < this.neighbors.size(); i++){
+            neighbor = (Node) this.neighbors.get(i);
+            tempList = neighbor.getShortestPathList(key); // C B
+            double edgeWeight = this.getEdgeByNeighborKey(neighbor.key).getWeight(); // 2
+            tempWeight = calculatePathWeight(tempList) + edgeWeight; // 4
+            if(tempWeight < minWeight){
+                minList = tempList;
+                minWeight = tempWeight;
+            }
+        }
+
+        if(minList.size() > 0){
+            minList.add(0, this);
+        }
+
+        // there is no valid path
+        return minList;
+    }
 
 
-    public double shortestPath(int key) {
+    public double shortestPathDist(int key) {
+        List<node_data> list = this.getShortestPathList(key);
 
-        return Double.MAX_VALUE;
+        if(list.size() == 0) {
+            return Double.MAX_VALUE;
+        }
+
+        return calculatePathWeight(list);
     }
 
 
@@ -194,6 +205,26 @@ public class Node implements node_data {
 
         return obj;
 
+    }
+
+
+    private static double calculatePathWeight(List<node_data> list){
+
+        if(list.size() == 0) return Double.MAX_VALUE;
+        if(list.size() == 1) return 0;
+
+        double totalWeight = 0;
+        node_data src;
+        node_data dest;
+
+        for(int i = 0; i < list.size() - 1; i++){
+            src = list.get(i);
+            dest = list.get(i+1);
+            edge_data edge = ((Node)src).getEdgeByNeighborKey(dest.getKey());
+            totalWeight += edge.getWeight();
+        }
+
+        return totalWeight;
     }
 
 }

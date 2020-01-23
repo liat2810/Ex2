@@ -143,41 +143,16 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		return this.shortestPathList(src, dest).size();
+		Node source = (Node) this._graph.getNode(src);
+		return source.shortestPathDist(dest);
 	}
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		return this.shortestPathList(src, dest);
-	}
-
-	private List<node_data> shortestPathList(int src, int dest){
-
 		Node source = (Node) this._graph.getNode(src);
-		List<node_data> shortestList = null;
-		List<node_data> list;
-		int minDist = Integer.MAX_VALUE;
-		int dist = 0;
-
-		for(node_data n : source.getNeighbors()){
-
-			list = ((Node) n).isValidPath(dest);
-			dist = list.size();
-
-			if(dist > 0){
-				if(dist < minDist){
-					minDist = dist;
-					shortestList = list;
-				}
-			}
-		}
-
-		if(shortestList == null){
-			return new ArrayList<>();
-		}
-
-		return shortestList;
+		return source.getShortestPathList(dest);
 	}
+
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
@@ -191,22 +166,18 @@ public class Graph_Algo implements graph_algorithms{
 			int src = keysList[i];
 			int dest = keysList[i+1];
 			temp = this.shortestPath(src, dest);
-
 			if(temp.size() == 0){
-				return new ArrayList<>();
+				return null;
 			}
 			shortest.addAll(temp);
 		}
-
 		return shortest;
 	}
 
 	@Override
 	public graph copy() {
-		// TODO Auto-generated method stub
-		return null;
+		return ((DGraph) this._graph).copy();
 	}
-
 
 
 	public static void main(String[] args){
@@ -216,7 +187,6 @@ public class Graph_Algo implements graph_algorithms{
 
 		ga.init("graph.json");
 		ga.save("graphAfterSave.json");
-
 
 
 	}

@@ -19,6 +19,33 @@ public class DGraph implements graph{
 		this.size = 0;
 	}
 
+	public DGraph(DGraph other){
+
+		this.V = new ArrayList<node_data>();
+		this.E = new ArrayList<edge_data>();
+		this.VKeyToIndex = new HashMap<>();
+		this.size = 0;
+
+		for(int i = 0; i < other.V.size(); i++){
+			Node otherNode = (Node) other.V.get(i);
+			Node newNode = new Node(otherNode);
+			this.addNode(newNode);
+		}
+
+		for(int i = 0; i < other.E.size(); i++){
+
+			Edge otherEdge = (Edge) other.E.get(i);
+
+			int srcKey = otherEdge.getSrc();
+			int destKey = otherEdge.getDest();
+
+			this.connect(srcKey, destKey, otherEdge.getWeight());
+		}
+
+
+	}
+
+
 
 	@Override
 	public node_data getNode(int key) {
@@ -62,7 +89,6 @@ public class DGraph implements graph{
 		Node src = (Node) this.getNode(node_id);
 		return src.getAllEdges();
 	}
-
 
 	@Override
 	public node_data removeNode(int key) {
@@ -117,6 +143,10 @@ public class DGraph implements graph{
 		}
 
 		return -1;
+	}
+
+	public graph copy(){
+		return new DGraph(this);
 	}
 
 	public static void main(String[] args){
