@@ -9,12 +9,13 @@ public class Edge implements edge_data {
     private double weight;
     private int tag;
     private String info;
-
+    private boolean visited;
 
     public Edge(node_data src, node_data dest, double weight){
         this.src = src;
         this.dest = dest;
         this.weight = weight;
+        this.visited = false;
     }
 
     @Override
@@ -52,6 +53,13 @@ public class Edge implements edge_data {
         this.tag = t;
     }
 
+    public void setVisited(boolean flag){
+        this.visited = flag;
+    }
+
+    public boolean isVisited(){
+        return this.visited;
+    }
 
     public JSONObject toJsonObject(){
 

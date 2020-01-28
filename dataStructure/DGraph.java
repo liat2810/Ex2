@@ -71,9 +71,18 @@ public class DGraph implements graph{
 	}
 
 	@Override
-	public void connect(int src, int dest, double w) {
+	public void connect(int src, int dest, double w){
 		Node source = (Node) this.getNode(src);
 		Node destination = (Node) getNode(dest);
+
+		if(source == null){
+			System.out.println("Node "+ src + " not found");
+			return;
+		}else if (destination == null) {
+			System.out.println("Node "+ dest + " not found");
+			return;
+		}
+
 		Edge edge = new Edge(source, destination, w);
 		source.connect(destination, edge);
 		this.E.add(edge);
@@ -129,11 +138,9 @@ public class DGraph implements graph{
 		return 0;
 	}
 
-
 	public Collection<edge_data> getAllEdges(){
 		return this.E;
 	}
-
 
 	private int getNodeIndexByKey(int key){
 		Integer nodeIndex = this.VKeyToIndex.get(key);
@@ -141,16 +148,10 @@ public class DGraph implements graph{
 		if(nodeIndex != null && (nodeIndex >= 0 && nodeIndex < this.size)){
 			return nodeIndex;
 		}
-
 		return -1;
 	}
 
 	public graph copy(){
 		return new DGraph(this);
 	}
-
-	public static void main(String[] args){
-
-	}
-
 }

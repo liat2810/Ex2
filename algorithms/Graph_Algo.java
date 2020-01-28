@@ -5,12 +5,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import dataStructure.*;
 import dataStructure.graph;
 
 
+import gui.GraphGUI;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -27,7 +29,7 @@ import utils.Point3D;
 public class Graph_Algo implements graph_algorithms{
 
 	private graph _graph;
-
+	private GraphGUI _graphGUI;
 
 	public Graph_Algo(){
 		this._graph = new DGraph();
@@ -89,14 +91,13 @@ public class Graph_Algo implements graph_algorithms{
 
 		}
 
-
 		//Parse Edges
 		for(int i = 0; i < edges.size(); i++){
 			JSONObject jsonEdge = (JSONObject) edges.get(i);
 			Long srcKey = (Long) jsonEdge.get("src");
 			Long destKey = (Long) jsonEdge.get("dest");
-			Long weight = (Long) jsonEdge.get("weight");
-			graph.connect(srcKey.intValue(), destKey.intValue(), weight.doubleValue());
+			double weight = ((Number)jsonEdge.get("weight")).doubleValue();
+			graph.connect(srcKey.intValue(), destKey.intValue(), weight);
 		}
 
 		this._graph = graph;
@@ -135,7 +136,7 @@ public class Graph_Algo implements graph_algorithms{
 	public boolean isConnected() {
 			for(node_data n1 : this._graph.getV()){
 				for(node_data n2 : this._graph.getV()){
-					if(n1 != n2 && ((Node) n1).isValidPath((n2).getKey()).size() == 0) return false;
+					if(n1 != n2 && ! ((Node) n1).isValidPath(n2.getKey())) return false;
 				}
 			}
 		return true;
@@ -157,19 +158,23 @@ public class Graph_Algo implements graph_algorithms{
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 
-		Integer[] keysList = (Integer[]) targets.toArray();
+//		Integer[] keysList = (Integer[]) targets.toArray();
 
 		List<node_data> shortest = new ArrayList<>();
 		List<node_data> temp;
 
-		for(int i = 0; i < keysList.length-1; i++){
-			int src = keysList[i];
-			int dest = keysList[i+1];
+		for(int i = 0; i < targets.size()-1; i++){
+			int src = targets.get(i);
+			int dest = targets.get(i+1);
 			temp = this.shortestPath(src, dest);
 			if(temp.size() == 0){
 				return null;
+			}else {
+				// add all items from temp to shortest list
+				for(int j = (i == 0 ? 0 : 1); j < temp.size(); j++){
+					shortest.add(temp.get(j));
+				}
 			}
-			shortest.addAll(temp);
 		}
 		return shortest;
 	}
@@ -180,14 +185,74 @@ public class Graph_Algo implements graph_algorithms{
 	}
 
 
-	public static void main(String[] args){
+	private static double calculatePathWeight(List<node_data> list){
 
+		if(list.size() == 0) return Double.MAX_VALUE;
+		if(list.size() == 1) return 0;
+
+		double totalWeight = 0;
+		node_data src;
+		node_data dest;
+
+		for(int i = 0; i < list.size() - 1; i++){
+			src = list.get(i);
+			dest = list.get(i+1);
+			edge_data edge = ((Node)src).getEdgeByNeighborKey(dest.getKey());
+			totalWeight += edge.getWeight();
+		}
+
+		return totalWeight;
+	}
+
+	public Collection<node_data> getGraphNodes(){
+		return this._graph.getV();
+	}
+
+
+	public graph getGraph(){
+		return this._graph;
+	}
+
+	public void setGraphGUI(GraphGUI gui){
+		this._graphGUI = gui;
+	}
+
+	public void updateGUI(){
+		if(this._graphGUI != null){
+			this._graphGUI.drawDGraph();
+		}
+	}
+
+
+	public static void main(String[] args){
 
 		Graph_Algo ga = new Graph_Algo();
 
-		ga.init("graph.json");
-		ga.save("graphAfterSave.json");
+		ga.init("small_graph.json");
+
+		ArrayList targets = new ArrayList<Integer>();
+
+		targets.add(1);
+		targets.add(2);
+		targets.add(3);
+		targets.add(6);
+		targets.add(5);
+		targets.add(4);
+		targets.add(3);
+		targets.add(2);
 
 
+		System.out.println("is ga connected?");
+		System.out.println(ga.isConnected());
+
+		List l = ga.TSP(targets);
+
+		if(l != null){
+			for(int i = 0; i < l.size(); i++){
+
+				System.out.println(((Node)l.get(i)).getKey());
+			}
+			System.out.println(calculatePathWeight(l));
+		}
 	}
 }
