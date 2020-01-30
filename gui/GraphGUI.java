@@ -1,13 +1,17 @@
 package gui;
 
-import java.io.*;
-
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
 import algorithms.Graph_Algo;
+import algorithms.graph_algorithms;
 import dataStructure.*;
 import utils.Point3D;
 
-public class GraphGUI {
+public class GraphGUI implements graph_algorithms {
+
+    private static final double SCALE = 0.1;
 
     private Graph_Algo graphAlgo_;
 
@@ -26,6 +30,7 @@ public class GraphGUI {
         this.graphAlgo_.setGraphGUI(this);
     }
 
+    @Override
     public void init(graph g){
         if(this.graphAlgo_ == null){
             this.graphAlgo_ = new Graph_Algo();
@@ -34,7 +39,94 @@ public class GraphGUI {
         this.graphAlgo_.init(g);
     }
 
-    public void initFromFile(String file) throws IOException {
+    @Override
+    public graph copy() {
+        return this.graphAlgo_.copy();
+    }
+
+    @Override
+    public boolean isConnected() {
+        return this.graphAlgo_.isConnected();
+    }
+
+    @Override
+    public double shortestPathDist(int src, int dest) {
+        return this.graphAlgo_.shortestPathDist(src, dest);
+    }
+
+
+    /*
+    * Returns the shortest path list of Nodes and marks the starting point and the edges
+    * on the graphic interface in green
+    */
+    @Override
+    public List<node_data> shortestPath(int src, int dest) {
+
+        List<node_data> pathList =  this.graphAlgo_.shortestPath(src, dest);
+        if(pathList == null){
+            return null;
+        }
+
+        StdDraw.setPenColor(Color.GREEN);
+
+        Node source;
+        Node destination;
+
+        source = (Node) pathList.get(0);
+        Point3D p = source.getLocation();
+        StdDraw.setPenRadius(0.03);
+        StdDraw.point(p.x()*SCALE, p.y()*SCALE);
+
+        for(int i = 0; i < pathList.size()-1; i++){
+
+            source = (Node) pathList.get(i);
+            destination = (Node) pathList.get(i+1);
+
+            Point3D srcLocation = source.getLocation();
+            Point3D destLocation = destination.getLocation();
+            StdDraw.setPenRadius(0.007);
+            StdDraw.line(srcLocation.x() * SCALE,srcLocation.y() * SCALE, destLocation.x() * SCALE, destLocation.y() * SCALE);
+
+        }
+        return pathList;
+    }
+
+    @Override
+    public List<node_data> TSP(List<Integer> targets) {
+
+
+        List<node_data> pathList =  this.graphAlgo_.TSP(targets);
+        if(pathList == null){
+            return null;
+        }
+
+        StdDraw.setPenColor(Color.GREEN);
+
+        Node source;
+        Node destination;
+
+        source = (Node) pathList.get(0);
+        Point3D p = source.getLocation();
+        StdDraw.setPenRadius(0.03);
+        StdDraw.point(p.x()*SCALE, p.y()*SCALE);
+
+        for(int i = 0; i < pathList.size()-1; i++){
+
+            source = (Node) pathList.get(i);
+            destination = (Node) pathList.get(i+1);
+
+            Point3D srcLocation = source.getLocation();
+            Point3D destLocation = destination.getLocation();
+            StdDraw.setPenRadius(0.007);
+            StdDraw.line(srcLocation.x() * SCALE,srcLocation.y() * SCALE, destLocation.x() * SCALE, destLocation.y() * SCALE);
+
+        }
+
+        return pathList;
+    }
+
+    @Override
+    public void init(String file) {
         if(this.graphAlgo_ == null){
             this.graphAlgo_ = new Graph_Algo();
             this.graphAlgo_.setGraphGUI(this);
@@ -42,7 +134,8 @@ public class GraphGUI {
         this.graphAlgo_.init(file);
     }
 
-    public void saveToFile(String file) throws IOException {
+    @Override
+    public void save(String file){
         if(this.graphAlgo_ == null){
             this.graphAlgo_ = new Graph_Algo();
             this.graphAlgo_.setGraphGUI(this);
@@ -50,6 +143,9 @@ public class GraphGUI {
         this.graphAlgo_.save(file);
     }
 
+    public Graph_Algo getGraphAlgo() {
+        return graphAlgo_;
+    }
 
     public void drawDGraph() {
 
@@ -63,13 +159,11 @@ public class GraphGUI {
 
             Point3D p = n.getLocation();
 
-            double scale = 0.1;
-
             StdDraw.setPenRadius(0.03);
             StdDraw.setPenColor(Color.BLUE);
 
-            StdDraw.text(p.x()*scale, p.y()*scale + 0.02, n.getKey()+"");
-            StdDraw.point(p.x()*scale, p.y()*scale);
+            StdDraw.text(p.x()*SCALE, p.y()*SCALE + 0.02, n.getKey()+"");
+            StdDraw.point(p.x()*SCALE, p.y()*SCALE);
 
             // draw edges
 
@@ -87,16 +181,16 @@ public class GraphGUI {
                 double weightPointX = neighborLocation.x() + (neighborLocation.x() > p.x() ? -Math.sqrt(0.2/(1+m*m)) : Math.sqrt(0.5/(1+m*m)));
                 double weightPointY = m*(weightPointX - neighborLocation.x()) + neighborLocation.y();
 
-                StdDraw.line(p.x() * scale,p.y() * scale, neighborLocation.x() * scale, neighborLocation.y() * scale);
+                StdDraw.line(p.x() * SCALE,p.y() * SCALE, neighborLocation.x() * SCALE, neighborLocation.y() * SCALE);
 
                 StdDraw.setPenRadius(0.025);
                 StdDraw.setPenColor(Color.YELLOW);
 
-                StdDraw.point(dirPointX*scale, dirPointY*scale);
+                StdDraw.point(dirPointX*SCALE, dirPointY*SCALE);
 
                 StdDraw.setPenColor(Color.BLACK);
 
-                StdDraw.text(weightPointX*scale, weightPointY*scale, "" + edge.getWeight());
+                StdDraw.text(weightPointX*SCALE, weightPointY*SCALE, "" + edge.getWeight());
             }
         }
     }
@@ -104,15 +198,24 @@ public class GraphGUI {
 
     public static void main(String[] args){
 
-
         GraphGUI graphGui = new GraphGUI();
-        try{
-            graphGui.initFromFile("small_graph.json");
-        }catch(IOException e){
-            System.err.println(e.getStackTrace());
-        }
+        graphGui.init("small_graph.json");
 
         graphGui.drawDGraph();
 
+        ArrayList targets = new ArrayList<Integer>();
+
+        graphGui.shortestPath(4,6);
+
+//        targets.add(1);
+//        targets.add(2);
+//        targets.add(3);
+//        targets.add(6);
+//        targets.add(5);
+//        targets.add(4);
+//        targets.add(3);
+//        targets.add(2);
+//
+//        graphGui.TSP(targets);
     }
 }

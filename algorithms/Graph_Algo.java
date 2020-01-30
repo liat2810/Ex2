@@ -217,6 +217,8 @@ public class Graph_Algo implements graph_algorithms{
 		this._graphGUI = gui;
 	}
 
+
+
 	public void updateGUI(){
 		if(this._graphGUI != null){
 			this._graphGUI.drawDGraph();

@@ -4,26 +4,26 @@
       "key": 1,
       "weight": 1,
       "Point3D": {
-        "x": 1,
-        "y": 1,
-        "z": 1
+        "x": 8,
+        "y": 8,
+        "z": 10
       }
     },
     {
       "key": 2,
       "weight": 2,
       "Point3D": {
-        "x": 2,
-        "y": 2,
-        "z": 2
+        "x": 9,
+        "y": 5,
+        "z": 12
       }
     },
     {
       "key": 3,
       "weight": 2,
       "Point3D": {
-        "x": 3,
-        "y": 3,
+        "x": 4,
+        "y": 4,
         "z": 2
       }
     },
@@ -32,7 +32,7 @@
       "weight": 4,
       "Point3D": {
         "x": 5,
-        "y": 23,
+        "y": 7,
         "z": 4
       }
     },
@@ -40,99 +40,27 @@
       "key": 5,
       "weight": 1,
       "Point3D": {
-        "x": 3,
-        "y": 4,
+        "x": 6,
+        "y": 7,
         "z": 6
       }
     },
     {
       "key": 6,
-      "weight": 2,
+      "weight": 1,
       "Point3D": {
-        "x": 4,
-        "y": 2,
-        "z": 2
+        "x": 3,
+        "y": 8,
+        "z": 6
       }
     },
     {
       "key": 7,
-      "weight": 2,
+      "weight": 1,
       "Point3D": {
         "x": 1,
-        "y": 32,
-        "z": 3
-      }
-    },
-    {
-      "key": 8,
-      "weight": 2,
-      "Point3D": {
-        "x": 4,
-        "y": 5,
-        "z": 1
-      }
-    },
-    {
-      "key": 9,
-      "weight": 2,
-      "Point3D": {
-        "x": 44,
-        "y": 32,
-        "z": 5
-      }
-    },
-    {
-      "key": 10,
-      "weight": 3,
-      "Point3D": {
-        "x": 33,
-        "y": 14,
-        "z": 42
-      }
-    },
-    {
-      "key": 11,
-      "weight": 2,
-      "Point3D": {
-        "x": 4,
-        "y": 55,
-        "z": 62
-      }
-    },
-    {
-      "key": 12,
-      "weight": 2,
-      "Point3D": {
-        "x": 5,
-        "y": 33,
-        "z": 24
-      }
-    },
-    {
-      "key": 13,
-      "weight": 2,
-      "Point3D": {
-        "x": 24,
-        "y": 6,
-        "z": 76
-      }
-    },
-    {
-      "key": 14,
-      "weight": 2,
-      "Point3D": {
-        "x": 2,
         "y": 2,
-        "z": 2
-      }
-    },
-    {
-      "key": 15,
-      "weight": 2,
-      "Point3D": {
-        "x": 6,
-        "y": 7,
-        "z": 19
+        "z": 6
       }
     }
   ],
@@ -150,112 +78,54 @@
       "dest": 4,
       "weight": 1
     }, {
-      "src": 2,
-      "dest": 1,
+      "src": 4,
+      "dest": 5,
       "weight": 2
     },{
-      "src": 3,
+      "src": 5,
       "dest": 1,
       "weight": 4
-    },{
-      "src": 6,
-      "dest": 12,
-      "weight": 5
-    },{
-      "src": 12,
-      "dest": 6,
-      "weight": 5
-    },{
-      "src": 4,
-      "dest": 11,
-      "weight": 2
-    },{
-      "src": 2,
-      "dest": 5,
-      "weight": 1
-    },{
-      "src": 6,
-      "dest": 7,
-      "weight": 1
-    },{
-      "src": 7,
-      "dest": 8,
-      "weight": 22
-    },{
-      "src": 6,
-      "dest": 8,
-      "weight": 1
-    },{
-      "src": 8,
-      "dest": 9,
-      "weight": 2
-    },{
-      "src": 9,
-      "dest": 8,
-      "weight":92
-    },{
-      "src": 9,
-      "dest": 10,
-      "weight": 2
-    },{
-      "src": 9,
-      "dest": 11,
-      "weight": 1
-    },{
-      "src": 11,
-      "dest": 10,
-      "weight": 9
-    },{
-      "src": 11,
-      "dest": 13,
-      "weight": 2
-    },{
-      "src": 13,
-      "dest": 12,
-      "weight": 2
-    },{
-      "src": 12,
-      "dest": 14,
-      "weight": 3
-    },{
-      "src": 13,
-      "dest": 15,
-      "weight": 5
-    },{
-      "src": 15,
-      "dest": 14,
-      "weight": 2
     },
     {
-      "src": 15,
-      "dest": 4,
+      "src": 1,
+      "dest": 6,
+      "weight": 4
+    },
+    {
+      "src": 6,
+      "dest": 1,
+      "weight": 4
+    },
+    {
+      "src": 7,
+      "dest": 1,
+      "weight": 1.2
+    },
+    {
+      "src": 7,
+      "dest":  6,
+      "weight": 1
+    },
+    {
+      "src": 6,
+      "dest": 3,
+      "weight": 1.5
+    },
+    {
+      "src": 4,
+      "dest": 2,
+      "weight": 4
+    },
+    {
+      "src": 5,
+      "dest": 3,
       "weight": 7
     },
     {
-      "src": 14,
-      "dest": 15,
-      "weight": 15
-    },{
-      "src": 3,
-      "dest": 5,
-      "weight": 6
-    },{
-      "src": 3,
-      "dest": 11,
-      "weight": 22
-    },{
-      "src": 1,
-      "dest": 15,
-      "weight": 100
-    },{
-      "src": 7,
-      "dest": 12,
-      "weight": 5
-    },
-    {
-      "src": 2,
-      "dest": 13,
-      "weight": 48
+      "src": 5,
+      "dest": 6,
+      "weight": 4
     }
+
   ]
 }

@@ -1,8 +1,12 @@
 package dataStructure;
 
+import utils.Point3D;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.time.Duration;
+import java.time.Instant;
 
 
 public class DGraph implements graph{
@@ -41,8 +45,6 @@ public class DGraph implements graph{
 
 			this.connect(srcKey, destKey, otherEdge.getWeight());
 		}
-
-
 	}
 
 
@@ -154,4 +156,37 @@ public class DGraph implements graph{
 	public graph copy(){
 		return new DGraph(this);
 	}
+
+
+	public static void main(String[] args){
+
+		Instant start = Instant.now();
+
+		DGraph g = new DGraph();
+
+		for (int i = 0; i < 1000000; i++) {
+
+			Point3D p = new Point3D(i, i+1,i+2);
+			Node n = new Node(i, p, 0);
+			g.addNode(n);
+		}
+
+		for (int i = 0; i < 1000000; i++) {
+
+			for (int j = 0; j < 10;) {
+				int random = (int)(Math.random()*1000000);
+				if (random != i){
+					g.connect(i, random, 1);
+					j++;
+				}
+			}
+		}
+
+		Instant end = Instant.now();
+		Duration timeElapsed = Duration.between(start, end);
+		System.out.println("Time taken: "+ timeElapsed.toSeconds() +" seconds");
+		System.out.println("Graph creation done");
+	}
+
+
 }
